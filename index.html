@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BizFlow — Lead, GST Invoice & CRM Sync Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div>
+        <h1>BizFlow Portal</h1>
+        <p class="subtitle">Enterprise Lead-to-Invoice &amp; Account Sync Workflow</p>
+      </div>
+      <button id="resetDemoBtn" class="btn btn-outline">Reset Demo Data</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Summary KPI Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Total Client Leads</span>
+        <h2 id="totalLeadsCount">0</h2>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Invoices Generated (Incl. 18% GST)</span>
+        <h2 id="totalInvoiceAmount">₹0</h2>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Synced to Accounts</span>
+        <h2 id="syncedCount">0</h2>
+      </div>
+    </section>
+
+    <!-- Step 1: Add New Client Lead -->
+    <section class="card">
+      <div class="card-header">
+        <h3>1. Add New Client Lead</h3>
+        <span class="badge badge-info">Step 1</span>
+      </div>
+      <form id="leadForm" class="lead-form">
+        <div class="form-group">
+          <label for="clientName">Client / Company Name</label>
+          <input type="text" id="clientName" placeholder="e.g., Delhi Public School" required />
+        </div>
+        <div class="form-group">
+          <label for="clientEmail">Client Email</label>
+          <input type="email" id="clientEmail" placeholder="accounts@dps.edu.in" required />
+        </div>
+        <div class="form-group">
+          <label for="dealAmount">Deal Amount (₹ Base)</label>
+          <input type="number" id="dealAmount" placeholder="50000" min="1" required />
+        </div>
+        <div class="form-action">
+          <button type="submit" class="btn btn-primary">+ Add Lead</button>
+        </div>
+      </form>
+      <p id="formError" class="error-text" hidden></p>
+    </section>
+
+    <!-- Step 2 & 3: Leads, GST Billing & External Sync Table -->
+    <section class="card">
+      <div class="card-header">
+        <h3>2. Active Deals, GST Invoices &amp; Account Sync</h3>
+        <div class="filter-bar">
+          <input type="text" id="searchInput" placeholder="Search client..." />
+          <select id="statusFilter">
+            <option value="ALL">All Statuses</option>
+            <option value="PENDING">Pending</option>
+            <option value="INVOICED">Invoiced (18% GST)</option>
+            <option value="SYNCED">Synced to Accounts</option>
+            <option value="SYNC_FAILED">Sync Failed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Base Deal</th>
+              <th>18% GST</th>
+              <th>Final Bill</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <!-- Rows rendered dynamically by app.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Integration / API Sync Logs -->
+    <section class="card">
+      <div class="card-header">
+        <h3>3. External CRM / ERP Sync Logs</h3>
+        <label class="toggle-fail">
+          <input type="checkbox" id="simulateFailureToggle" />
+          Simulate API Network Error (Test Retry)
+        </label>
+      </div>
+      <ul id="syncLogList" class="log-list">
+        <!-- Logs rendered dynamically -->
+      </ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
